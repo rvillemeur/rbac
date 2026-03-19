@@ -1,5 +1,7 @@
 Class {
-	#name : #RBACDeletionDenied,
-	#superclass : #RBACActionDenied,
-	#category : 'RBAC-Core'
+	#name : 'RBACDeletionDenied',
+	#superclass : 'RBACActionDenied',
+	#category : 'RBAC-Core-exception',
+	#package : 'RBAC-Core',
+	#tag : 'exception'
 }

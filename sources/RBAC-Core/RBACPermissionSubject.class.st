@@ -1,35 +1,37 @@
 Class {
-	#name : #RBACPermissionSubject,
-	#superclass : #RBACNamedModel,
+	#name : 'RBACPermissionSubject',
+	#superclass : 'RBACNamedModel',
 	#instVars : [
 		'tag'
 	],
-	#category : 'RBAC-Core'
+	#category : 'RBAC-Core-permission',
+	#package : 'RBAC-Core',
+	#tag : 'permission'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBACPermissionSubject >> isOperation [
 
 	^false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBACPermissionSubject >> subjectType [
 	"No op for Glorp filtered hierarchy"
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBACPermissionSubject >> subjectType: aString [
 	"No op for Glorp filtered hierarchy"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACPermissionSubject >> tag [
 
 	^tag
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACPermissionSubject >> tag: anObject [
 
 	tag := anObject

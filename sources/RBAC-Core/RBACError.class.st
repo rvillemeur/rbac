@@ -1,10 +1,12 @@
 Class {
-	#name : #RBACError,
-	#superclass : #GRError,
-	#category : 'RBAC-Core'
+	#name : 'RBACError',
+	#superclass : 'GRError',
+	#category : 'RBAC-Core-exception',
+	#package : 'RBAC-Core',
+	#tag : 'exception'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RBACError class >> signalWith: signaler [
 	
 	^self new
@@ -12,15 +14,15 @@ RBACError class >> signalWith: signaler [
 		signal
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBACError >> isResumable [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACError >> signaler [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACError >> signaler: anObject [
 ]

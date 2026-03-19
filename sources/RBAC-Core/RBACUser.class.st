@@ -2,8 +2,8 @@
 I represent a user in the framework, I can belong to groups and have different roles.
 "
 Class {
-	#name : #RBACUser,
-	#superclass : #RBACProfile,
+	#name : 'RBACUser',
+	#superclass : 'RBACProfile',
 	#instVars : [
 		'behaviors',
 		'password',
@@ -14,32 +14,34 @@ Class {
 		'passwordSalt',
 		'email'
 	],
-	#category : #'RBAC-Core'
+	#category : 'RBAC-Core-profile',
+	#package : 'RBAC-Core',
+	#tag : 'profile'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACUser class >> displayName [
 	^'Users'
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RBACUser class >> superUserName [
 	^ 'admin'
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBACUser >> <= anObject [ 
 
 	^self name <= anObject name
 ]
 
-{ #category : #groups }
+{ #category : 'groups' }
 RBACUser >> addToRole: aRBACRole [ 
 
 	aRBACRole addUser: self
 ]
 
-{ #category : #groups }
+{ #category : 'groups' }
 RBACUser >> allRoles [
 	^ self groups
 		inject: Set new
@@ -49,57 +51,57 @@ RBACUser >> allRoles [
 				yourself ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACUser >> basicDisplayName [
 	"Answer the value of the receiver's ''displayName'' instance variable."
 
 	^displayName
 ]
 
-{ #category : #behaviors }
+{ #category : 'behaviors' }
 RBACUser >> behaviorAt: aByteString [ 
 	
 	^self behaviorAt: aByteString ifAbsent:[NotFound signalFor: aByteString]
 ]
 
-{ #category : #behaviors }
+{ #category : 'behaviors' }
 RBACUser >> behaviorAt: aByteString ifAbsent: aBlock [
 	^self behaviors at: aByteString ifAbsent: aBlock
 ]
 
-{ #category : #groups }
+{ #category : 'groups' }
 RBACUser >> behaviorAt: aByteString put: aRBACUserBehavior [ 
 	
 	self behaviors at: aByteString put: aRBACUserBehavior
 ]
 
-{ #category : #behaviors }
+{ #category : 'behaviors' }
 RBACUser >> behaviorOfClass: aRBACUserBehaviorClass [ 
 
 	^self behaviors detect: [:one | one class= aRBACUserBehaviorClass ] ifNone: [NotFound signalFor:  aRBACUserBehaviorClass]
 ]
 
-{ #category : #groups }
+{ #category : 'groups' }
 RBACUser >> behaviors [
 
 	behaviors ifNil: [self initializeBehaviors].
 	^behaviors
 ]
 
-{ #category : #groups }
+{ #category : 'groups' }
 RBACUser >> behaviors: aDictionary [ 
 
 	behaviors:= aDictionary
 ]
 
-{ #category : #permissions }
+{ #category : 'permissions' }
 RBACUser >> canExecute: target [
 	^ (super canExecute: target)
 		ifTrue: [ true ]
 		ifFalse: [ self groups anySatisfy: [ :one | one canExecute: target ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACUser >> displayName [
 	"Answer the value of the receiver's ''displayName'' instance variable."
 
@@ -107,7 +109,7 @@ RBACUser >> displayName [
 	^displayName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACUser >> displayName: anObject [
 	"Set the value of the receiver's ''displayName'' instance variable to the argument, anObject."
 
@@ -116,25 +118,25 @@ RBACUser >> displayName: anObject [
 		ifFalse: [ displayName := anObject ]
 ]
 
-{ #category : #'tags-person' }
+{ #category : 'tags-person' }
 RBACUser >> email [
 
 	^email ifNil: [email := String new]
 ]
 
-{ #category : #'tags-person' }
+{ #category : 'tags-person' }
 RBACUser >> email: aString [
 
 	email := aString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBACUser >> generateNewSalt [
 
 	self passwordSalt: (GRPlatform current newRandom nextInt: SmallInteger maxVal * (10 raisedTo: 100)) asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACUser >> groups [
 	"Answer the groups to which the receiver belongs."
 
@@ -142,23 +144,23 @@ RBACUser >> groups [
 	^groups
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACUser >> groups: aCollection [
 	groups := aCollection
 ]
 
-{ #category : #behaviors }
+{ #category : 'behaviors' }
 RBACUser >> hasBehavior: aRBACUserBehaviorClass [ 
 
 	^self behaviors anySatisfy: [ :each | each class = aRBACUserBehaviorClass ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBACUser >> hasPersona [
 	^ self persona notNil
 ]
 
-{ #category : #roles }
+{ #category : 'roles' }
 RBACUser >> hasRole: aRole [
 	^ (super hasRole: aRole)
 		ifTrue: [ true ]
@@ -169,78 +171,78 @@ RBACUser >> hasRole: aRole [
 			false ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBACUser >> initialize [
 	super initialize.
 	isSuperuser := false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBACUser >> initializeBehaviors [
 
 	behaviors := Dictionary new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBACUser >> initializeGroups [
 	groups := Set new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACUser >> isSuperuser [
 	"Answer the value of the receiver's ''isSuperuser'' instance variable."
 
 	^isSuperuser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACUser >> isSuperuser: anObject [
 	"Set the value of the receiver's ''isSuperuser'' instance variable to the argument, anObject."
 
 	isSuperuser := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBACUser >> isUser [
 
 	^true
 ]
 
-{ #category : #groups }
+{ #category : 'groups' }
 RBACUser >> onAddedToGroup: aRBACGroup [
 	self groups add: aRBACGroup
 ]
 
-{ #category : #groups }
+{ #category : 'groups' }
 RBACUser >> onRemovedFromGroup: aRBACGroup [
 	self groups remove: aRBACGroup ifAbsent: [  ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACUser >> password [
 
 	^password
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACUser >> password: anObject [
 
 	password := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACUser >> passwordSalt [
 
 	^passwordSalt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACUser >> passwordSalt: anObject [
 
 	passwordSalt := anObject
 ]
 
-{ #category : #permissions }
+{ #category : 'permissions' }
 RBACUser >> permissionFor: anObject [
 	^ self groups
 		inject: (super permissionFor: anObject) asTransient
@@ -249,17 +251,17 @@ RBACUser >> permissionFor: anObject [
 				permissionOr: (group permissionFor: anObject) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACUser >> persona [
 	^ persona
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACUser >> persona: anObject [
 	persona := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBACUser >> rolesString [
 
 	^String streamContents: 
@@ -269,13 +271,13 @@ RBACUser >> rolesString [
 				separatedBy: [stream nextPutAll: ', ']]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACUser >> setNewPassword: passwordString [
 
 	self setNewPassword: passwordString salt: nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACUser >> setNewPassword: passwordString salt: saltString [
 
 	password := passwordString.

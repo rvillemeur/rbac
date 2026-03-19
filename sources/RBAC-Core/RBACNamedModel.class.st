@@ -2,16 +2,17 @@
 I'm an abstract superclas representing anything that has a name and a description.
 "
 Class {
-	#name : #RBACNamedModel,
-	#superclass : #RBACObject,
+	#name : 'RBACNamedModel',
+	#superclass : 'RBACObject',
 	#instVars : [
 		'name',
 		'description'
 	],
-	#category : 'RBAC-Core'
+	#category : 'RBAC-Core',
+	#package : 'RBAC-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBACNamedModel class >> newNamed: aString [
 
 	^self new
@@ -19,40 +20,40 @@ RBACNamedModel class >> newNamed: aString [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACNamedModel >> <= anObject [
 
 	^self name <= anObject name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACNamedModel >> description [
 	^ description
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACNamedModel >> description: aString [
 	description := aString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBACNamedModel >> initializeRandomName [
 	name := (self class name copyFrom: 5 to: self class name size)
 		, ((GRPlatform current newRandom nextInt: 1000000) printString)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACNamedModel >> name [
 	name ifNil: [ self initializeRandomName ].
 	^name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACNamedModel >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACNamedModel >> printOn: aStream [
 	super printOn: aStream.
 	aStream

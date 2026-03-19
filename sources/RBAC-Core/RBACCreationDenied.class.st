@@ -1,5 +1,7 @@
 Class {
-	#name : #RBACCreationDenied,
-	#superclass : #RBACActionDenied,
-	#category : 'RBAC-Core'
+	#name : 'RBACCreationDenied',
+	#superclass : 'RBACActionDenied',
+	#category : 'RBAC-Core-exception',
+	#package : 'RBAC-Core',
+	#tag : 'exception'
 }

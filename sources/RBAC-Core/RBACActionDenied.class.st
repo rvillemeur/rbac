@@ -1,19 +1,21 @@
 Class {
-	#name : #RBACActionDenied,
-	#superclass : #RBACException,
+	#name : 'RBACActionDenied',
+	#superclass : 'RBACException',
 	#instVars : [
 		'user'
 	],
-	#category : 'RBAC-Core'
+	#category : 'RBAC-Core-exception',
+	#package : 'RBAC-Core',
+	#tag : 'exception'
 }
 
-{ #category : #uncategorized }
+{ #category : 'uncategorized' }
 RBACActionDenied class >> denialErrorText [
 	"Answer the description text for these exceptions."
 	^ 'You are not authorized for doing this operation.'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBACActionDenied class >> signalForUser: aRBACUser [ 
 	
 	^self new 
@@ -21,7 +23,7 @@ RBACActionDenied class >> signalForUser: aRBACUser [
 		signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACActionDenied >> user: aRBACUser [
 	user := aRBACUser
 ]

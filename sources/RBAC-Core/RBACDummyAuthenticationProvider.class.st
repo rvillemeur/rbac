@@ -2,18 +2,20 @@
 I'm a Dummy authentication provider, anything you request I'll grant.
 "
 Class {
-	#name : #RBACDummyAuthenticationProvider,
-	#superclass : #RBACAuthenticationProvider,
-	#category : 'RBAC-Core'
+	#name : 'RBACDummyAuthenticationProvider',
+	#superclass : 'RBACAuthenticationProvider',
+	#category : 'RBAC-Core-authentication',
+	#package : 'RBAC-Core',
+	#tag : 'authentication'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RBACDummyAuthenticationProvider >> authenticateUsername: userString password: passwordString [
 
 	^true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RBACDummyAuthenticationProvider >> lastLoginOf: aRBACUser [
 	^ Timestamp now
 ]

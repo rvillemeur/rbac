@@ -4,16 +4,18 @@ I'm the main actor of this framework, all permissions are assigned to me, and I,
 The role represents a  unit of behavior, so one user or group can have several roles assigned instead of having a separate user for each role.
 "
 Class {
-	#name : #RBACRole,
-	#superclass : #RBACAbstractRole,
+	#name : 'RBACRole',
+	#superclass : 'RBACAbstractRole',
 	#instVars : [
 		'permissions',
 		'tag'
 	],
-	#category : #'RBAC-Core'
+	#category : 'RBAC-Core-role',
+	#package : 'RBAC-Core',
+	#tag : 'role'
 }
 
-{ #category : #permissions }
+{ #category : 'permissions' }
 RBACRole >> addPermission: aRBACPermission [
 	| previous |
 	aRBACPermission role: self.
@@ -22,27 +24,27 @@ RBACRole >> addPermission: aRBACPermission [
 		ifFalse: [ self permissions add: aRBACPermission ]
 ]
 
-{ #category : #permissions }
+{ #category : 'permissions' }
 RBACRole >> addPermissionFor: target [
 	(self includesPermissionFor: target)
 		ifFalse: [ self permissions add: (RBACPermission role: self target: target) allowAll ]
 ]
 
-{ #category : #members }
+{ #category : 'members' }
 RBACRole >> addUser: aRBACUser [
 	self addProfile: aRBACUser
 ]
 
-{ #category : #members }
+{ #category : 'members' }
 RBACRole >> allSubrolesDo: aBlock [
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBACRole >> canExecute: anObject [
 	^ self permissions anySatisfy: [ :one | one target = anObject and: [ one allowsExecution ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBACRole >> computeTag [
 	^ '.'
 		join:
@@ -50,12 +52,12 @@ RBACRole >> computeTag [
 				collect: [ :each | each asLowercase ])
 ]
 
-{ #category : #uncategorized }
+{ #category : 'uncategorized' }
 RBACRole >> containsRole: aRole [
 	^ aRole = self
 ]
 
-{ #category : #permissions }
+{ #category : 'permissions' }
 RBACRole >> ensurePermissionFor: anObject [
 
 	^(self lookupPermissionFor: anObject)
@@ -63,29 +65,29 @@ RBACRole >> ensurePermissionFor: anObject [
 		ifNotNil: [:permission | permission]
 ]
 
-{ #category : #permissions }
+{ #category : 'permissions' }
 RBACRole >> includesPermissionFor: target [
 	^ self permissions anySatisfy: [ :one | one target = target ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBACRole >> initialize [
 	super initialize.
 	self initializePermissions.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBACRole >> initializePermissions [
 	permissions := OrderedCollection new
 ]
 
-{ #category : #permissions }
+{ #category : 'permissions' }
 RBACRole >> lookupPermissionFor: anObject [
 
 	^self permissions detect: [:one | one target = anObject] ifNone: [nil]
 ]
 
-{ #category : #permissions }
+{ #category : 'permissions' }
 RBACRole >> permissionFor: anObject [
 
 	| perm |
@@ -98,46 +100,46 @@ RBACRole >> permissionFor: anObject [
 				ifFalse: [perm asTransient target: anObject]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACRole >> permissions [
 	permissions ifNil: [ self initializePermissions ].
 	^ permissions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACRole >> permissions: anObject [
 	permissions := anObject
 ]
 
-{ #category : #permissions }
+{ #category : 'permissions' }
 RBACRole >> removeAllPermissions [
 	
 	self permissions removeAll
 ]
 
-{ #category : #permissions }
+{ #category : 'permissions' }
 RBACRole >> removePermission: aRBACCRUDPermission [
 	^self permissions remove: aRBACCRUDPermission
 ]
 
-{ #category : #members }
+{ #category : 'members' }
 RBACRole >> removeUser: aRBACUser [ 
 	
 	(self users includes: aRBACUser) ifTrue: [ self users remove: aRBACUser ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBACRole >> tag [
 	^ tag ifNil:
 		[ tag := self computeTag ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACRole >> tag: anObject [
 	tag := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBACRole >> users [
 	
 	^self profiles select: [ :each | each isUser ]

@@ -2,18 +2,20 @@
 I represent the Deletion action
 "
 Class {
-	#name : #RBACDeletion,
-	#superclass : #RBACAction,
-	#category : 'RBAC-Core'
+	#name : 'RBACDeletion',
+	#superclass : 'RBACAction',
+	#category : 'RBAC-Core-action',
+	#package : 'RBAC-Core',
+	#tag : 'action'
 }
 
-{ #category : #uncategorized }
+{ #category : 'uncategorized' }
 RBACDeletion class >> isValidationActionClass [
 	
 	^true
 ]
 
-{ #category : #uncategorized }
+{ #category : 'uncategorized' }
 RBACDeletion >> canBeDoneBy: aRBACUser [
 	"Answer true if the receiver can be done by aRBACUser."
 	
