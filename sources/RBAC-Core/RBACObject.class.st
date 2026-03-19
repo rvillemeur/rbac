@@ -4,7 +4,7 @@ I'm the common superclass of all RBAC classes, I provide an id for persistence.
 "
 Class {
 	#name : 'RBACObject',
-	#superclass : 'GRObject',
+	#superclass : 'AnObsoleteGRObject',
 	#instVars : [
 		'id',
 		'creationTs',

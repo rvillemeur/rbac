@@ -5,7 +5,7 @@ All queries regarding whether a user can or cannot do some RBACAction should be 
 "
 Class {
 	#name : 'RBACSession',
-	#superclass : 'GRObject',
+	#superclass : 'AnObsoleteGRObject',
 	#instVars : [
 		'user',
 		'creationTime',
@@ -68,7 +68,7 @@ RBACSession >> creationTime: aDateAndTime [
 { #category : 'accessing' }
 RBACSession >> initializeProperties [
 
-	^properties := GRSmallDictionary new
+	^properties := Dictionary new
 ]
 
 { #category : 'accessing' }

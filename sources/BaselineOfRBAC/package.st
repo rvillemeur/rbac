@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfRBAC }
+Package { #name : 'BaselineOfRBAC' }

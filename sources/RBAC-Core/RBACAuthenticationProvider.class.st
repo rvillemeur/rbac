@@ -3,7 +3,7 @@ I represent the abstract for user authentication by means of username and passwo
 "
 Class {
 	#name : 'RBACAuthenticationProvider',
-	#superclass : 'GRObject',
+	#superclass : 'AnObsoleteGRObject',
 	#classVars : [
 		'AuthenticationProviderClass',
 		'Current'

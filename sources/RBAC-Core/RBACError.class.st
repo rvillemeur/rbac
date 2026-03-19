@@ -1,6 +1,6 @@
 Class {
 	#name : 'RBACError',
-	#superclass : 'GRError',
+	#superclass : 'Error',
 	#category : 'RBAC-Core-exception',
 	#package : 'RBAC-Core',
 	#tag : 'exception'

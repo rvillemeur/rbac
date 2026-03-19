@@ -39,7 +39,7 @@ RBACNamedModel >> description: aString [
 { #category : 'private' }
 RBACNamedModel >> initializeRandomName [
 	name := (self class name copyFrom: 5 to: self class name size)
-		, ((GRPlatform current newRandom nextInt: 1000000) printString)
+		, ((Random new nextInteger:  1000000) printString)
 ]
 
 { #category : 'accessing' }
