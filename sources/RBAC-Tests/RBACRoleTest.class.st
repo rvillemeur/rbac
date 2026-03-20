@@ -1,10 +1,11 @@
 Class {
-	#name : #RBACRoleTest,
-	#superclass : #RBACAbstractRoleTest,
-	#category : 'RBAC-Tests'
+	#name : 'RBACRoleTest',
+	#superclass : 'RBACAbstractRoleTest',
+	#category : 'RBAC-Tests',
+	#package : 'RBAC-Tests'
 }
 
-{ #category : #uncategorized }
+{ #category : 'uncategorized' }
 RBACRoleTest >> testAllSubrolesDo [
 	"Test the allSubrolesBreadthFirstDo: method."
 
@@ -17,7 +18,7 @@ RBACRoleTest >> testAllSubrolesDo [
 	self assert: result = 0
 ]
 
-{ #category : #uncategorized }
+{ #category : 'uncategorized' }
 RBACRoleTest >> testCanExecute [
 	"Test the canExecute: method."
 
@@ -35,7 +36,7 @@ RBACRoleTest >> testCanExecute [
 	self assert: (role canExecute: (self operations at: 2))
 ]
 
-{ #category : #uncategorized }
+{ #category : 'uncategorized' }
 RBACRoleTest >> testPermissionAddition [
 	| role perm perm2 perm3 perm4 menuA |
 	menuA := RBACNamedModel new.
@@ -72,7 +73,7 @@ RBACRoleTest >> testPermissionAddition [
 						allowsUpdate: true))
 ]
 
-{ #category : #uncategorized }
+{ #category : 'uncategorized' }
 RBACRoleTest >> testPermissionAdditionAndRemoval [
 	| role menuA menuB |
 	menuA := RBACNamedModel new.

@@ -1,16 +1,17 @@
 Class {
-	#name : #RBACAbstractRoleTest,
-	#superclass : #RBACTest,
-	#category : 'RBAC-Tests'
+	#name : 'RBACAbstractRoleTest',
+	#superclass : 'RBACTest',
+	#category : 'RBAC-Tests',
+	#package : 'RBAC-Tests'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RBACAbstractRoleTest class >> isAbstract [
 
 	^self name = #RBACAbstractRoleTest
 ]
 
-{ #category : #uncategorized }
+{ #category : 'uncategorized' }
 RBACAbstractRoleTest >> addRoles [
 	(self compositeRoles at: 1)
 		addRole: (self simpleRoles at: 1);
@@ -23,113 +24,92 @@ RBACAbstractRoleTest >> addRoles [
 		addRole: (self simpleRoles at: 4)
 ]
 
-{ #category : #uncategorized }
+{ #category : 'uncategorized' }
 RBACAbstractRoleTest >> comparePermission: perm with: comparandPerm [
 	^(perm target = comparandPerm target) & (perm bits = comparandPerm bits)
 ]
 
-{ #category : #uncategorized }
-RBACAbstractRoleTest >> crudPermissionsEqualityBetween: aCollection and: anotherCollection [ 
-
+{ #category : 'uncategorized' }
+RBACAbstractRoleTest >> crudPermissionsEqualityBetween: aCollection and: anotherCollection [
 	"Private - Answer true if aCollection is equal to anotherCollection."
 
+	aCollection size = anotherCollection size ifFalse: [ ^ false ].
 
+	aCollection with: anotherCollection do: [ :sysop :sysop2 |
+		(self comparePermission: sysop with: sysop2) ifFalse: [ ^ false ] ].
 
-	aCollection size = anotherCollection size ifFalse: [^false].
-
-	aCollection with: anotherCollection
-
-		do: [:sysop :sysop2 | (self comparePermission: sysop with: sysop2) ifFalse: [^false]].
-
-	^true
-]
-
-{ #category : #uncategorized }
-RBACAbstractRoleTest >> equalityBetween: aCollection and: anotherCollection [
-	aCollection size = anotherCollection size
-		ifFalse: [ ^ false ].
-	aCollection
-		do: [ :each | 
-			(anotherCollection includes: each)
-				ifFalse: [ ^ false ] ].
 	^ true
 ]
 
-{ #category : #uncategorized }
-RBACAbstractRoleTest >> systemPermissionEqualityBetween: aSystemPermission and: anotherSystemPermission [ 
+{ #category : 'uncategorized' }
+RBACAbstractRoleTest >> equalityBetween: aCollection and: anotherCollection [
 
+	aCollection size = anotherCollection size ifFalse: [ ^ false ].
+	aCollection do: [ :each |
+		(anotherCollection includes: each) ifFalse: [ ^ false ] ].
+	^ true
+]
+
+{ #category : 'uncategorized' }
+RBACAbstractRoleTest >> systemPermissionEqualityBetween: aSystemPermission and: anotherSystemPermission [
 	"Private - Answer true if aSystemPermission is equal to anotherSystemPermission."
 
-
-
-	^(aSystemPermission role equals: anotherSystemPermission role) 
-
-		& (aSystemPermission operation = anotherSystemPermission operation)
+	^ (aSystemPermission role equals: anotherSystemPermission role)
+	  & (aSystemPermission operation = anotherSystemPermission operation)
 ]
 
-{ #category : #uncategorized }
-RBACAbstractRoleTest >> systemPermissionsEqualityBetween: aCollection and: anotherCollection [ 
-
+{ #category : 'uncategorized' }
+RBACAbstractRoleTest >> systemPermissionsEqualityBetween: aCollection and: anotherCollection [
 	"Private - Answer true if aCollection is equal to anotherCollection."
 
+	aCollection size = anotherCollection size ifFalse: [ ^ false ].
 
+	aCollection do: [ :sysop |
+			anotherCollection
+				detect: [ :sysop2 |
+				self systemPermissionEqualityBetween: sysop and: sysop2 ]
+				ifNone: [ ^ false ] ].
 
-	aCollection size = anotherCollection size ifFalse: [^false].
-
-	aCollection do: [:sysop | anotherCollection detect: [:sysop2 | (self systemPermissionEqualityBetween: sysop and: sysop2)] ifNone: [^false]].
-
-	^true
+	^ true
 ]
 
-{ #category : #uncategorized }
+{ #category : 'uncategorized' }
 RBACAbstractRoleTest >> testAllSubroles [
-
 	"Test the allSubroles method."
-
-
 
 	self addRoles.
 
-	self 
+	self assert: (self
+			 equalityBetween: (self simpleRoles at: 2) allSubroles
+			 and: OrderedCollection new).
 
-		assert: (self equalityBetween: (self simpleRoles at: 2) allSubroles and: OrderedCollection new).
+	self assert: (self
+			 equalityBetween: (self compositeRoles at: 4) allSubroles
+			 and: (OrderedCollection
+					  with: (self simpleRoles at: 3)
+					  with: (self simpleRoles at: 4))).
 
-	self assert: (self equalityBetween: (self compositeRoles at: 4) allSubroles
+	self assert: (self
+			 equalityBetween: (self compositeRoles at: 2) allSubroles
+			 and: (OrderedCollection
+					  with: (self compositeRoles at: 4)
+					  with: (self simpleRoles at: 3)
+					  with: (self simpleRoles at: 4)
+					  with: (self simpleRoles at: 2))).
 
-				and: (OrderedCollection with: (self simpleRoles at: 3) with: (self simpleRoles at: 4))).
-
-	self assert: (self equalityBetween: (self compositeRoles at: 2) allSubroles
-
-				and: (OrderedCollection 
-
-						with: (self compositeRoles at: 4)
-
-						with: (self simpleRoles at: 3)
-
-						with: (self simpleRoles at: 4)
-
-						with: (self simpleRoles at: 2))).
-
-	self assert: (self equalityBetween: (self compositeRoles at: 1) allSubroles
-
-				and: ((OrderedCollection new)
-
-						add: (self simpleRoles at: 1);
-
-						add: (self compositeRoles at: 2);
-
-						add: (self compositeRoles at: 4);
-
-						add: (self simpleRoles at: 3);
-
-						add: (self simpleRoles at: 4);
-
-						add: (self simpleRoles at: 2);
-
-						yourself))
+	self assert: (self
+			 equalityBetween: (self compositeRoles at: 1) allSubroles
+			 and: (OrderedCollection new
+					  add: (self simpleRoles at: 1);
+					  add: (self compositeRoles at: 2);
+					  add: (self compositeRoles at: 4);
+					  add: (self simpleRoles at: 3);
+					  add: (self simpleRoles at: 4);
+					  add: (self simpleRoles at: 2);
+					  yourself))
 ]
 
-{ #category : #uncategorized }
+{ #category : 'uncategorized' }
 RBACAbstractRoleTest >> testAllSubrolesDo [
 	| result |
 	self addRoles.
@@ -159,7 +139,7 @@ RBACAbstractRoleTest >> testAllSubrolesDo [
 	self deny: result
 ]
 
-{ #category : #uncategorized }
+{ #category : 'uncategorized' }
 RBACAbstractRoleTest >> testCRUDPermissionTransitivity [
 	| role perm target |
 	target := RBACNamedModel new.
@@ -171,7 +151,7 @@ RBACAbstractRoleTest >> testCRUDPermissionTransitivity [
 	self assert: ((self compositeRoles at: 1) permissionFor: target) allowsUpdate
 ]
 
-{ #category : #uncategorized }
+{ #category : 'uncategorized' }
 RBACAbstractRoleTest >> testDescription [
 	"Test the description and description: methods."
 
@@ -184,7 +164,7 @@ RBACAbstractRoleTest >> testDescription [
 	self assert: compositeRole description = 'This is another role'
 ]
 
-{ #category : #uncategorized }
+{ #category : 'uncategorized' }
 RBACAbstractRoleTest >> testEquals [
 
 	"Test the equals: method."
@@ -224,7 +204,7 @@ RBACAbstractRoleTest >> testEquals [
 	self deny: ((self simpleRoles at: 4) equals: (self simpleRoles at: 1))
 ]
 
-{ #category : #uncategorized }
+{ #category : 'uncategorized' }
 RBACAbstractRoleTest >> testIncludesRole [
 	self addRoles.
 	self assert: ((self compositeRoles at: 1) containsRole: (self simpleRoles at: 1)).
@@ -261,7 +241,7 @@ RBACAbstractRoleTest >> testIncludesRole [
 	self deny: ((self compositeRoles at: 4) containsRole: (self simpleRoles at: 1))
 ]
 
-{ #category : #uncategorized }
+{ #category : 'uncategorized' }
 RBACAbstractRoleTest >> testIncludesSystemPermissionFor [
 	"Test the includesSystemPermissionFor: method."
 
@@ -305,7 +285,7 @@ RBACAbstractRoleTest >> testIncludesSystemPermissionFor [
 		assert: ((self compositeRoles at: 4) hasPermissionFor: (self operations at: 2))
 ]
 
-{ #category : #uncategorized }
+{ #category : 'uncategorized' }
 RBACAbstractRoleTest >> testIsComposite [
 
 	"Test the isComposite method."
@@ -329,7 +309,7 @@ RBACAbstractRoleTest >> testIsComposite [
 	self deny: (self simpleRoles at: 4) isComposite
 ]
 
-{ #category : #uncategorized }
+{ #category : 'uncategorized' }
 RBACAbstractRoleTest >> testRecursiveRoleAdditionValidation [
 
 	(self compositeRoles at: 1)
@@ -357,70 +337,54 @@ RBACAbstractRoleTest >> testRecursiveRoleAdditionValidation [
 		raise: RBACRoleAlreadyAssigned
 ]
 
-{ #category : #uncategorized }
+{ #category : 'uncategorized' }
 RBACAbstractRoleTest >> testSystemPermissionAddition [
+
 	| role |
-	(role := self simpleRoles at: 1) addPermissionFor: (self operations at: 1).
+	(role := self simpleRoles at: 1) addPermissionFor:
+		(self operations at: 1).
 	self assert: (role canExecute: (self operations at: 1)).
 	(self compositeRoles at: 1) addRole: role.
-	self assert: ((self compositeRoles at: 1) canExecute: self operations first)
+	self assert:
+		((self compositeRoles at: 1) canExecute: self operations first)
 ]
 
-{ #category : #uncategorized }
+{ #category : 'uncategorized' }
 RBACAbstractRoleTest >> testWithAllSubroles [
-
 	"Test the withAllSubroles method."
-
-
 
 	self addRoles.
 
-	self assert: (self equalityBetween: (self simpleRoles at: 2) withAllSubroles
+	self assert: (self
+			 equalityBetween: (self simpleRoles at: 2) withAllSubroles
+			 and: (OrderedCollection with: (self simpleRoles at: 2))).
 
-				and: (OrderedCollection with: (self simpleRoles at: 2))).
+	self assert: (self
+			 equalityBetween: (self compositeRoles at: 4) withAllSubroles
+			 and: (OrderedCollection
+					  with: (self compositeRoles at: 4)
+					  with: (self simpleRoles at: 3)
+					  with: (self simpleRoles at: 4))).
 
-	self assert: (self equalityBetween: (self compositeRoles at: 4) withAllSubroles
+	self assert: (self
+			 equalityBetween: (self compositeRoles at: 2) withAllSubroles
+			 and: (OrderedCollection new
+					  add: (self compositeRoles at: 2);
+					  add: (self compositeRoles at: 4);
+					  add: (self simpleRoles at: 3);
+					  add: (self simpleRoles at: 4);
+					  add: (self simpleRoles at: 2);
+					  yourself)).
 
-				and: (OrderedCollection 
-
-						with: (self compositeRoles at: 4)
-
-						with: (self simpleRoles at: 3)
-
-						with: (self simpleRoles at: 4))).
-
-	self assert: (self equalityBetween: (self compositeRoles at: 2) withAllSubroles
-
-				and: (OrderedCollection new
-
-						add: (self compositeRoles at: 2);
-
-						add: (self compositeRoles at: 4);
-
-						add: (self simpleRoles at: 3);
-
-						add: (self simpleRoles at: 4);
-
-						add: (self simpleRoles at: 2);
-						yourself)).
-
-	self assert: (self equalityBetween: (self compositeRoles at: 1) withAllSubroles
-
-				and: ((OrderedCollection new)
-
-						add: (self compositeRoles at: 1);
-
-						add: (self simpleRoles at: 1);
-
-						add: (self compositeRoles at: 2);
-
-						add: (self compositeRoles at: 4);
-
-						add: (self simpleRoles at: 3);
-
-						add: (self simpleRoles at: 4);
-
-						add: (self simpleRoles at: 2);
-
-						yourself))
+	self assert: (self
+			 equalityBetween: (self compositeRoles at: 1) withAllSubroles
+			 and: (OrderedCollection new
+					  add: (self compositeRoles at: 1);
+					  add: (self simpleRoles at: 1);
+					  add: (self compositeRoles at: 2);
+					  add: (self compositeRoles at: 4);
+					  add: (self simpleRoles at: 3);
+					  add: (self simpleRoles at: 4);
+					  add: (self simpleRoles at: 2);
+					  yourself))
 ]

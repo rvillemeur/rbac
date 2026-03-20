@@ -4,9 +4,9 @@ I represent the Read action
 Class {
 	#name : 'RBACRead',
 	#superclass : 'RBACAction',
-	#category : 'RBAC-Core-action',
+	#category : 'RBAC-Core-operation',
 	#package : 'RBAC-Core',
-	#tag : 'action'
+	#tag : 'operation'
 }
 
 { #category : 'uncategorized' }

@@ -1,16 +1,17 @@
 Class {
-	#name : #RBACActionTest,
-	#superclass : #RBACTest,
-	#category : 'RBAC-Tests'
+	#name : 'RBACActionTest',
+	#superclass : 'RBACTest',
+	#category : 'RBAC-Tests',
+	#package : 'RBAC-Tests'
 }
 
-{ #category : #uncategorized }
+{ #category : 'uncategorized' }
 RBACActionTest >> setUp [
 	super setUp.
 	self setupProfile
 ]
 
-{ #category : #uncategorized }
+{ #category : 'uncategorized' }
 RBACActionTest >> setupProfile [
 	| profile permA permB permC targetA targetB |
 	targetA := self operations at: 1.
@@ -34,7 +35,7 @@ RBACActionTest >> setupProfile [
 		addPermission: permC
 ]
 
-{ #category : #uncategorized }
+{ #category : 'uncategorized' }
 RBACActionTest >> testEvaluationByUser [
 	"Test the addition of roles to the user."
 

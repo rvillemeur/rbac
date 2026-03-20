@@ -7,9 +7,9 @@ Class {
 	#instVars : [
 		'subject'
 	],
-	#category : 'RBAC-Core-action',
+	#category : 'RBAC-Core-operation',
 	#package : 'RBAC-Core',
-	#tag : 'action'
+	#tag : 'operation'
 }
 
 { #category : 'uncategorized' }

@@ -9,5 +9,8 @@ Class {
 BaselineOfRBAC >> baseline: spec [
 
 	<baseline>
-	spec for: #common do: [ spec package: 'RBAC' ]
+	spec for: #common do: [
+			spec
+				package: 'RBAC-Core';
+				package: 'RBAC-Tests' ]
 ]

@@ -4,9 +4,9 @@ I represent the Creation action
 Class {
 	#name : 'RBACCreation',
 	#superclass : 'RBACAction',
-	#category : 'RBAC-Core-action',
+	#category : 'RBAC-Core-operation',
 	#package : 'RBAC-Core',
-	#tag : 'action'
+	#tag : 'operation'
 }
 
 { #category : 'uncategorized' }

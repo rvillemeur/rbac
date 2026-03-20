@@ -1,20 +1,21 @@
 Class {
-	#name : #RBACUserTest,
-	#superclass : #RBACProfileTest,
-	#category : 'RBAC-Tests'
+	#name : 'RBACUserTest',
+	#superclass : 'RBACProfileTest',
+	#category : 'RBAC-Tests',
+	#package : 'RBAC-Tests'
 }
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RBACUserTest >> classToTest [
 	^ RBACUser
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RBACUserTest >> profile1 [
 	^ self users first
 ]
 
-{ #category : #'unit tests' }
+{ #category : 'unit tests' }
 RBACUserTest >> testAdditionToAndRemotionFromGroup [
 	| user |
 	user := RBACUser new.
@@ -38,7 +39,7 @@ RBACUserTest >> testAdditionToAndRemotionFromGroup [
 	self assert: user groups isEmpty
 ]
 
-{ #category : #'unit tests' }
+{ #category : 'unit tests' }
 RBACUserTest >> testPermissionsInheritanceFromGroups [
 	"Test the addition of roles to the user."
 
@@ -71,7 +72,7 @@ RBACUserTest >> testPermissionsInheritanceFromGroups [
 	self assert: (profile canDelete: target)
 ]
 
-{ #category : #'unit tests' }
+{ #category : 'unit tests' }
 RBACUserTest >> testPreferences [
 	| user group |
 	user := RBACUser new.

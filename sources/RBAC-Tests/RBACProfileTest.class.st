@@ -1,38 +1,39 @@
 Class {
-	#name : #RBACProfileTest,
-	#superclass : #RBACTest,
+	#name : 'RBACProfileTest',
+	#superclass : 'RBACTest',
 	#instVars : [
 		'inferiorEntity',
 		'inferiorEntity2',
 		'superiorEntity',
 		'middleEntity'
 	],
-	#category : 'RBAC-Tests'
+	#category : 'RBAC-Tests',
+	#package : 'RBAC-Tests'
 }
 
-{ #category : #uncategorized }
+{ #category : 'uncategorized' }
 RBACProfileTest class >> isAbstract [
 	^ self name = #RBACProfileTest
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RBACProfileTest >> classToTest [
 	self shouldBeImplemented.
 ]
 
-{ #category : #instantiation }
+{ #category : 'instantiation' }
 RBACProfileTest >> profile1 [
 
 	^self classToTest new
 ]
 
-{ #category : #instantiation }
+{ #category : 'instantiation' }
 RBACProfileTest >> profile2 [
 
 	^self classToTest new
 ]
 
-{ #category : #'unit tests' }
+{ #category : 'unit tests' }
 RBACProfileTest >> testHasRole [
 
 	| samProfile |
@@ -55,7 +56,7 @@ RBACProfileTest >> testHasRole [
 	self assert: (samProfile hasRole: (self simpleRoles at: 5))
 ]
 
-{ #category : #'unit tests' }
+{ #category : 'unit tests' }
 RBACProfileTest >> testPermissions [
 	"Test the addition of roles to the user."
 
@@ -89,7 +90,7 @@ RBACProfileTest >> testPermissions [
 	self assert: (profile canRead: target2)
 ]
 
-{ #category : #'unit tests' }
+{ #category : 'unit tests' }
 RBACProfileTest >> testRemoveRoleIfAbsent [
 
 	| rbacProfile temp |
@@ -103,7 +104,7 @@ RBACProfileTest >> testRemoveRoleIfAbsent [
 	self shouldnt: [ rbacProfile removeRole: (self simpleRoles at: 2) ifAbsent: [  ] ] raise: NotFound
 ]
 
-{ #category : #'unit tests' }
+{ #category : 'unit tests' }
 RBACProfileTest >> testRoleAdditionAndRemotion [
 	"Test the addition and remotion of roles to the user."
 
@@ -123,7 +124,7 @@ RBACProfileTest >> testRoleAdditionAndRemotion [
 	self assert: rbacProfile roles isEmpty
 ]
 
-{ #category : #'unit tests' }
+{ #category : 'unit tests' }
 RBACProfileTest >> testRoles [
 	| profile |
 	profile := self users at: 1.

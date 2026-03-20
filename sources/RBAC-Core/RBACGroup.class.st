@@ -7,9 +7,9 @@ Class {
 	#instVars : [
 		'members'
 	],
-	#category : 'RBAC-Core-profile',
+	#category : 'RBAC-Core-subject',
 	#package : 'RBAC-Core',
-	#tag : 'profile'
+	#tag : 'subject'
 }
 
 { #category : 'accessing' }

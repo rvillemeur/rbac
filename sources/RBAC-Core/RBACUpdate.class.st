@@ -4,9 +4,9 @@ I represent the Update action
 Class {
 	#name : 'RBACUpdate',
 	#superclass : 'RBACAction',
-	#category : 'RBAC-Core-action',
+	#category : 'RBAC-Core-operation',
 	#package : 'RBAC-Core',
-	#tag : 'action'
+	#tag : 'operation'
 }
 
 { #category : 'uncategorized' }

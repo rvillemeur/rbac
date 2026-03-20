@@ -12,9 +12,9 @@ Class {
 		'name',
 		'value'
 	],
-	#category : 'RBAC-Core-profile',
+	#category : 'RBAC-Core-subject',
 	#package : 'RBAC-Core',
-	#tag : 'profile'
+	#tag : 'subject'
 }
 
 { #category : 'instance creation' }

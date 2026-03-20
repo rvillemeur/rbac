@@ -9,9 +9,9 @@ Class {
 		'preferences',
 		'inheritPreferences'
 	],
-	#category : 'RBAC-Core-profile',
+	#category : 'RBAC-Core-subject',
 	#package : 'RBAC-Core',
-	#tag : 'profile'
+	#tag : 'subject'
 }
 
 { #category : 'uncategorized' }
